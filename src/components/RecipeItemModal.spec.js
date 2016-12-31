@@ -1,16 +1,14 @@
 import React from 'react'
 import {shallow, mount} from 'enzyme'
 import Button from 'react-bootstrap/lib/Button'
-import RecipeItemForm from './RecipeItemForm'
 import RecipeItemModal from './RecipeItemModal'
 
 const setup = () => {
   const actions = {
-    onSave: jest.fn()
+    onSubmit: jest.fn()
   }
   const componentWrapper = mount(
-    <RecipeItemModal >
-      <RecipeItemForm onSave={actions.onSave}/>
+    <RecipeItemModal onSubmit={actions.onSubmit}>
     </RecipeItemModal>
   )
 
@@ -20,10 +18,8 @@ const setup = () => {
   }
 };
 
-it ('Click submit button on modal -> inner form save', () => {
+it ('Click submit button on modal -> call submit callback', () => {
   const {componentWrapper, actions} = setup()
-  console.log(componentWrapper.html())
-  console.log(componentWrapper.find(Button))
   componentWrapper.find(Button).at(0).simulate('click')
-  expect(actions.onSave).toHaveBeenCalledTimes(1)
+  expect(actions.onSubmit).toHaveBeenCalledTimes(1)
 })
