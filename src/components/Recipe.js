@@ -34,7 +34,6 @@ class Recipe extends Component {
     this.refs.editModal.open();
   }
   submitModal() {
-    console.log('asdf')
     this.refs.form.submit()
   }
   render() {    
@@ -58,7 +57,7 @@ class Recipe extends Component {
           <button className='btn btn-danger btn-delete' onClick={() => onDelete(recipe.id)}>Delete</button>
           {' '}
           <button className='btn btn-default' onClick={this.openEditModal}>Edit</button>
-          <RecipeItemModal ref='editModal' submitModal={this.submitModal}>
+          <RecipeItemModal ref='editModal' title='Edit Recipe' submitModal={this.submitModal}>
             <RecipeItemForm ref='form' recipe={recipe} onSave={onSave}/>
           </RecipeItemModal>
         </div>
