@@ -9,8 +9,11 @@ import Welcome from './Welcome';
 import RecipeItemForm from '../components/RecipeItemForm'
 import RecipeItemModal from '../components/RecipeItemModal'
 import Recipe from '../components/Recipe'
+import RecipeAddUI from '../components/RecipeAdd'
 
 import RecipeBoxContainer from '../containers/RecipeBox'
+import App from '../components/App'
+
 import reducers from '../reducers'
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
@@ -101,6 +104,13 @@ storiesOf('Recipe', module)
   })
 
 
+storiesOf('RecipeAdd', module)
+  .add('Click add button then show modal', () => (
+    <RecipeAddUI 
+    onSave={action('onAdd')} 
+    />
+  ))
+
 storiesOf('RecipeBox', module)
   .add('Show list of recipe in recipe box ', () => {
     let store = createStore(reducers)
@@ -110,10 +120,25 @@ storiesOf('RecipeBox', module)
       action.type = 'ADD'
       store.dispatch(action)
     })
-    store.subscribe(() => {console.log(store.getState())})
     return (
       <Provider store={store}>
         <RecipeBoxContainer />
+      </Provider>
+    )
+  })
+
+  storiesOf('App', module)
+  .add('The whole app', () => {
+    let store = createStore(reducers)
+    //prebuilt some recipes
+    recipes.forEach(recipe => {
+      let action = recipe
+      action.type = 'ADD'
+      store.dispatch(action)
+    })    
+    return (
+      <Provider store={store}>
+        <App />
       </Provider>
     )
   })
