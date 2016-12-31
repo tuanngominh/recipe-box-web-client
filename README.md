@@ -24,10 +24,66 @@ npm install react-bootstrap --save
 ```
 
 ### Step 3 - Enable unit test
-Using [enzyme](http://airbnb.io/enzyme/) with [jest](https://facebook.github.io/jest) [Redux example](https://github.com/reactjs/redux/tree/master/examples)
+Using [enzyme](http://airbnb.io/enzyme/) with [jest](https://facebook.github.io/jest) as recommended by [Redux example](https://github.com/reactjs/redux/tree/master/examples)
 
 ```sh
 npm install --save-dev enzyme react-addons-test-utils
 ```
 
 Create `component-name.spec.js` for test code
+
+### Step 4 - Add visual test catalog
+Using [react storybook](https://github.com/kadirahq/react-storybook) to view the app components in different ways at once. It looks like we explorer all [bootstrap components](http://getbootstrap.com/components/) with different configurations at once.
+
+This tool is helpfull during shaping, splitting the responsibility of presentational components during development. 
+
+## Issues 
+During the course of building this sample app, I face several issues.
+
+### Unit test component which use React-Bootstrap
+If component include React-Bootstrap component e.g. `src/components/RecipeItemModal.js` :
+```js
+class RecipeItemModal extends Component{
+  render() {
+    return (
+      <div>
+        <Modal show={this.state.showModal} onHide={this.close}>
+          <Modal.Footer>
+            <Button bsStyle='primary' onClick={this.props.submitModal}>Save</Button>
+            <Button onClick={this.close}>Close</Button>
+          </Modal.Footer>
+        </Modal>  
+      </div>      
+    )
+  }
+}
+```
+
+then in test code `src/components/RecipeItemModal.spec.js`
+```jsx
+import React from 'react'
+import {shallow, mount} from 'enzyme'
+import Button from 'react-bootstrap/lib/Button'
+import RecipeItemModal from './RecipeItemModal'
+
+const setup = () => {
+  const actions = {
+    onSubmit: jest.fn()
+  }
+  const componentWrapper = mount(
+    <RecipeItemModal onSubmit={actions.onSubmit}>
+    </RecipeItemModal>
+  )
+
+  return {
+    componentWrapper: componentWrapper,
+    actions: actions
+  }
+};
+
+it ('Click submit button on modal -> call submit callback', () => {
+  componentWrapper.find(Button).at(0).simulate('click') <-- Can't find Button
+  expect(actions.onSubmit).toHaveBeenCalledTimes(1)
+})
+```
+I can't find Button component in RecipeItemModal. But I can find FormControl component in `src/components/RecipeItemForm.spec.js`. So there is some tricky with working with React-Bootstrap Modal
