@@ -1,11 +1,11 @@
 I build this small app during learning react and redux. The app is simple: build a recipe box.
 
-## The steps
+## App building steps
 
-### App with react, webpack
+### Step 1 - Add react, webpack
 Using [create-react-app](https://github.com/facebookincubator/create-react-app) to quickly build a code base with react, webpack
 
-### App style
+### Step 2 - Add style
 Add style for the app by adding bootstrap, fontawesome
 ```sh
 cd project-folder
@@ -23,7 +23,7 @@ In this example code, I use Bootsrap's modal which will need Bootstrap js. Looks
 npm install react-bootstrap --save
 ```
 
-### Unit test
+### Step 3 - Enable unit test
 Using [enzyme](http://airbnb.io/enzyme/) with [jest](https://facebook.github.io/jest) [Redux example](https://github.com/reactjs/redux/tree/master/examples)
 
 ```sh
