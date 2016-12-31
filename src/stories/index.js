@@ -10,11 +10,29 @@ import RecipeItemForm from '../components/RecipeItemForm'
 import RecipeItemModal from '../components/RecipeItemModal'
 import Recipe from '../components/Recipe'
 
+import RecipeBoxContainer from '../containers/RecipeBox'
+import reducers from '../reducers'
+import {Provider} from 'react-redux'
+import {createStore} from 'redux'
+
 const recipe = {
   id: 1,
   recipeName: 'recipe 1',
   ingredients: ['ingredient 1', 'ingredient 2']
 }
+
+const recipes = [
+  {
+    id: 1,
+    recipeName: 'recipe 1',
+    ingredients: ['ingredient 1.1', 'ingredient 1.2']
+  },
+  {
+    id: 2,
+    recipeName: 'recipe 2',
+    ingredients: ['ingredient 2.1', 'ingredient 2.2']
+  }
+]
 
 storiesOf('Welcome', module)
   .add('to Storybook', () => (
@@ -66,18 +84,6 @@ storiesOf('Recipe', module)
     />
   ))
   .add('Multiple recipes', () => {
-    const recipes = [
-      {
-        id: 1,
-        recipeName: 'recipe 1',
-        ingredients: ['ingredient 1.1', 'ingredient 1.2']
-      },
-      {
-        id: 2,
-        recipeName: 'recipe 2',
-        ingredients: ['ingredient 2.1', 'ingredient 2.2']
-      }
-    ]
     return (
       <div>
         {recipes.map(recipe => (
@@ -91,5 +97,23 @@ storiesOf('Recipe', module)
           />
         ))}
       </div>
+    )
+  })
+
+
+storiesOf('RecipeBox', module)
+  .add('Show list of recipe in recipe box ', () => {
+    let store = createStore(reducers)
+    //prebuilt some recipes
+    recipes.forEach(recipe => {
+      let action = recipe
+      action.type = 'ADD'
+      store.dispatch(action)
+    })
+    store.subscribe(() => {console.log(store.getState())})
+    return (
+      <Provider store={store}>
+        <RecipeBoxContainer />
+      </Provider>
     )
   })

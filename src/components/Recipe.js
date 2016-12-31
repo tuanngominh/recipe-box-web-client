@@ -15,7 +15,7 @@ class Recipe extends Component {
   }
   onToggleIngredientsVisible() {
     if (!this.props.selectedRecipe) {
-      this.props.onToggleIngredientsVisible(this.props.id);  
+      this.props.onToggleIngredientsVisible(this.props.recipe.id);  
     } else {
       this.setState({
         ingredientsVisible: !this.state.ingredientsVisible
