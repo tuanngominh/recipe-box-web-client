@@ -1,4 +1,6 @@
-I build this small app during learning react and redux. The app is simple: build a recipe box.
+I build this small app during learning react and redux. The app is simple: build a recipe box. 
+
+[Demo](https://tuanngominh.github.io/recipe-box-web-client) is in [storybook](https://getstorybook.io) format in which first story is full app and following ones are app's components.
 
 ## App building steps
 

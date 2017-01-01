@@ -37,10 +37,21 @@ const recipes = [
   }
 ]
 
-storiesOf('Welcome', module)
-  .add('to Storybook', () => (
-    <Welcome showApp={linkTo('Button')}/>
-  ));
+storiesOf('The App', module)
+  .add(' ', () => {
+    let store = createStore(reducers)
+    //prebuilt some recipes
+    recipes.forEach(recipe => {
+      let action = recipe
+      action.type = 'ADD'
+      store.dispatch(action)
+    })    
+    return (
+      <Provider store={store}>
+        <App />
+      </Provider>
+    )
+  })
 
 storiesOf('RecipeItemForm', module)
   .add('Add ', () => (
@@ -123,22 +134,6 @@ storiesOf('RecipeBox', module)
     return (
       <Provider store={store}>
         <RecipeBoxContainer />
-      </Provider>
-    )
-  })
-
-  storiesOf('App', module)
-  .add('The whole app', () => {
-    let store = createStore(reducers)
-    //prebuilt some recipes
-    recipes.forEach(recipe => {
-      let action = recipe
-      action.type = 'ADD'
-      store.dispatch(action)
-    })    
-    return (
-      <Provider store={store}>
-        <App />
       </Provider>
     )
   })
