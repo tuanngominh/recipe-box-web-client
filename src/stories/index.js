@@ -17,6 +17,7 @@ import App from '../components/App'
 import reducers from '../reducers'
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
+import {loadState, saveState} from '../localStorage'
 
 const recipe = {
   id: 1,
@@ -39,13 +40,11 @@ const recipes = [
 
 storiesOf('The App', module)
   .add(' ', () => {
-    let store = createStore(reducers)
-    //prebuilt some recipes
-    recipes.forEach(recipe => {
-      let action = recipe
-      action.type = 'ADD'
-      store.dispatch(action)
-    })    
+    let store = createStore(reducers, loadState())
+    store.subscribe(() => {
+      saveState(store.getState())
+    })
+
     return (
       <Provider store={store}>
         <App />
