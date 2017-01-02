@@ -4,7 +4,7 @@ const recipe = (state, action) => {
   switch (action.type) {
     case 'ADD':
       return {
-        id: recipeId++,
+        id: ++recipeId,
         recipeName : action.recipeName,
         ingredients: action.ingredients
       }
@@ -22,6 +22,11 @@ const recipe = (state, action) => {
 const recipes = (state = [], action) => {
   switch (action.type) {
     case 'ADD':
+      //update max id from persisted state
+      recipeId = state.reduce((maxRecipeId, recipe) => {
+        maxRecipeId = Math.max(maxRecipeId, recipe.id)
+        return maxRecipeId
+      }, 0)
       return [...state, recipe(undefined, action)];
     case 'DELETE' :
       if (state.length === 0) {

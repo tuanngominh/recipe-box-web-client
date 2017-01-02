@@ -9,7 +9,13 @@ import reducers from './reducers'
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
 
-let store = createStore(reducers)
+import {loadState, saveState} from './localStorage'
+
+let store = createStore(reducers, loadState())
+store.subscribe(() => {
+  saveState(store.getState())
+})
+
 ReactDOM.render(
   <Provider store={store}>
     <App />
