@@ -9,7 +9,13 @@ import Login from './Login'
 import Logout from './Logout'
 import auth from '../auth'
 
-import {Router, Route, IndexRoute, browserHistory} from 'react-router'
+import {Router, Route, IndexRoute} from 'react-router'
+import { useRouterHistory } from 'react-router'
+import { createHistory } from 'history'
+
+const browserHistory = useRouterHistory(createHistory)({
+  basename: '/recipe-box-web-client'
+})
 
 const RecipeBoxWrapper = () => (
   <div>
